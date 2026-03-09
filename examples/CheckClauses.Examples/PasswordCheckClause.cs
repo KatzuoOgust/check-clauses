@@ -1,4 +1,4 @@
-namespace CheckClauses.Examples;
+namespace KatzuoOgust.CheckClauses.Examples;
 
 /// <summary>
 /// Check clause for password validation.

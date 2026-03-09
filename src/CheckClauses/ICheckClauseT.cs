@@ -1,4 +1,4 @@
-namespace CheckClauses;
+namespace KatzuoOgust.CheckClauses;
 
 /// <summary>
 /// Generic check clause interface with a value.

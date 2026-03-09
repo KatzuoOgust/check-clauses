@@ -1,6 +1,6 @@
 using System;
 
-namespace CheckClauses;
+namespace KatzuoOgust.CheckClauses;
 
 /// <summary>
 /// Extension methods for check clauses.

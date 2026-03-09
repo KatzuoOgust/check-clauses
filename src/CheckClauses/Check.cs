@@ -1,4 +1,4 @@
-namespace CheckClauses;
+namespace KatzuoOgust.CheckClauses;
 
 /// <summary>
 /// Entry point for creating check clauses.

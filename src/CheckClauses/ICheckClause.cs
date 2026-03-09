@@ -1,4 +1,4 @@
-namespace CheckClauses;
+namespace KatzuoOgust.CheckClauses;
 
 /// <summary>
 /// Marker interface for check clauses.

@@ -1,4 +1,4 @@
-namespace CheckClauses.Examples;
+namespace KatzuoOgust.CheckClauses.Examples;
 
 /// <summary>
 /// Extension methods for password check clauses.
