@@ -1,14 +1,13 @@
-namespace CheckClauses
+namespace CheckClauses;
+
+/// <summary>
+/// Generic check clause interface with a value.
+/// </summary>
+/// <typeparam name="T">The type of the value being checked or the context to use.</typeparam>
+public interface ICheckClause<T> : ICheckClause
 {
 	/// <summary>
-	/// Generic check clause interface with a value.
+	/// Gets the value being checked or the context to use.
 	/// </summary>
-	/// <typeparam name="T">The type of the value being checked or the context to use.</typeparam>
-	public interface ICheckClause<T> : ICheckClause
-	{
-		/// <summary>
-		/// Gets the value being checked or the context to use.
-		/// </summary>
-		T? Value { get; }
-	}
+	T? Value { get; }
 }

@@ -1,9 +1,8 @@
-namespace CheckClauses
+namespace CheckClauses;
+
+/// <summary>
+/// Marker interface for check clauses.
+/// </summary>
+public interface ICheckClause
 {
-	/// <summary>
-	/// Marker interface for check clauses.
-	/// </summary>
-	public interface ICheckClause
-	{
-	}
 }
