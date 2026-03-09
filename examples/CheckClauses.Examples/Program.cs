@@ -1,7 +1,4 @@
-﻿using CheckClauses;
-using CheckClauses.Examples;
-
-namespace CheckClauses.Examples;
+﻿namespace CheckClauses.Examples;
 
 class Program
 {
