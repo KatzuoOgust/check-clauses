@@ -19,8 +19,10 @@ bld/
 [Oo]bj/
 [Ll]og/
 
-# Visual Studio cache/options directory
+# IDE cache/options directory
 .vs/
+.idea/
+
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
