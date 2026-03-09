@@ -1,5 +1,8 @@
 ﻿namespace CheckClauses.Examples;
 
+/// <summary>
+/// Example program demonstrating password validation using CheckClauses.
+/// </summary>
 class Program
 {
 	static void Main(string[] args)
@@ -7,6 +10,7 @@ class Program
 		Console.WriteLine("CheckClauses Examples");
 		Console.WriteLine("====================\n");
 
+		// Validate a password with multiple requirements
 		var isValid = Check.That.Password("MyP@ssw0rd123")
 			.Match(pwd => pwd.MeetsLengthRequirements(8, 20) 
 				&& pwd.ContainsAtLeastCharacters(1, char.IsUpper) 
