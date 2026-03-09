@@ -32,6 +32,8 @@ var isValid = Check.That.Password("MyP@ssw0rd123")
     );
 ```
 
+For more examples, including `MatchOrThrow` with custom error messages, see [examples/CheckClauses.Examples/Program.cs](examples/CheckClauses.Examples/Program.cs).
+
 ## Core Concepts
 
 ### ICheckClause
