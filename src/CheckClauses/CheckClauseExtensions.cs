@@ -15,7 +15,7 @@ namespace CheckClauses
 		/// <param name="check">The check function to apply.</param>
 		/// <returns>The check clause.</returns>
 		/// <exception cref="ArgumentNullException">Thrown when <paramref name="clause"/> or <paramref name="check"/> is null.</exception>
-		public static bool With<T>(this T clause, Func<T, bool> check)
+		public static bool Match<T>(this T clause, Func<T, bool> check)
 			where T : ICheckClause
 		{
 			if (clause == null) throw new ArgumentNullException(nameof(clause));
