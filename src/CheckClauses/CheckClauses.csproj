@@ -5,6 +5,34 @@
     <RootNamespace>KatzuoOgust.CheckClauses</RootNamespace>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+
+    <!-- Package metadata -->
+    <PackageId>CheckClauses</PackageId>
+    <Authors>KatzuoOgust</Authors>
+    <Company>KatzuoOgust</Company>
+    <Product>CheckClauses</Product>
+    <Description>A fluent .NET library for building type-safe validation clauses using a declarative API.</Description>
+    <PackageTags>validation;fluent;check;clauses;type-safe</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/$(GITHUB_REPOSITORY_OWNER)/check-clauses</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/$(GITHUB_REPOSITORY_OWNER)/check-clauses</PackageProjectUrl>
+    
+    <!-- Versioning Strategy:
+         - Version/PackageVersion: Full SemVer (e.g., 1.2.3-beta.1) for NuGet
+         - AssemblyVersion: MAJOR.0.0.0 only (avoid breaking binary compatibility)
+         - FileVersion: MAJOR.MINOR.PATCH.BUILD (full 4-part version for diagnostics)
+         - InformationalVersion: Full version + commit info (for display)
+    -->
+    <Version>0.1.0</Version>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <!-- InformationalVersion will be set by CI/CD with commit SHA -->
+    
+    <!-- Enable package generation -->
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <!-- Uncomment when .NET 9.0 and 10.0 SDKs are available -->
