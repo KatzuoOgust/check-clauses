@@ -3,12 +3,9 @@ name: Release
 on:
   release:
     types: [published]
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to release (e.g., 1.0.0)'
-        required: true
-        type: string
+  push:
+    tags:
+      - 'v*.*.*'
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -34,6 +31,50 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
+    - name: Extract version from tag
+      id: version
+      run: |
+        if [[ "${{ github.ref }}" == refs/tags/v* ]]; then
+          VERSION=${GITHUB_REF#refs/tags/v}
+        elif [[ "${{ github.event.release.tag_name }}" == v* ]]; then
+          VERSION=${{ github.event.release.tag_name }}
+          VERSION=${VERSION#v}
+        else
+          echo "❌ No valid version tag found"
+          exit 1
+        fi
+        
+        # Validate semver format
+        if [[ ! $VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.-]+)?(\+[a-zA-Z0-9.-]+)?$ ]]; then
+          echo "❌ Invalid version format: $VERSION"
+          exit 1
+        fi
+        
+        # Extract major version for AssemblyVersion
+        MAJOR=$(echo $VERSION | cut -d. -f1)
+        
+        # Strip prerelease/metadata for FileVersion (must be numeric only)
+        FILE_VERSION=$(echo $VERSION | sed 's/[-+].*//')
+        BUILD_NUMBER=$(git rev-list --count HEAD)
+        FILE_VERSION="${FILE_VERSION}.${BUILD_NUMBER}"
+        
+        # AssemblyVersion: MAJOR.0.0.0 (only bump on breaking changes)
+        ASSEMBLY_VERSION="${MAJOR}.0.0.0"
+        
+        # InformationalVersion: Full version with commit SHA
+        COMMIT_SHA=$(git rev-parse HEAD)
+        INFO_VERSION="${VERSION}+sha.${COMMIT_SHA:0:7}"
+        
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "assembly_version=$ASSEMBLY_VERSION" >> $GITHUB_OUTPUT
+        echo "file_version=$FILE_VERSION" >> $GITHUB_OUTPUT
+        echo "info_version=$INFO_VERSION" >> $GITHUB_OUTPUT
+        
+        echo "📦 Package Version: $VERSION"
+        echo "🔧 Assembly Version: $ASSEMBLY_VERSION"
+        echo "📄 File Version: $FILE_VERSION"
+        echo "ℹ️  Informational Version: $INFO_VERSION"
+
     - name: Restore dependencies
       run: dotnet restore CheckClauses.sln
 
@@ -45,12 +86,15 @@ jobs:
 
     - name: Create NuGet package
       run: |
-        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-          VERSION="${{ github.event.inputs.version }}"
-          dotnet pack src/CheckClauses/CheckClauses.csproj --configuration Release --no-build --output ./artifacts /p:PackageVersion=$VERSION
-        else
-          dotnet pack src/CheckClauses/CheckClauses.csproj --configuration Release --no-build --output ./artifacts
-        fi
+        dotnet pack src/CheckClauses/CheckClauses.csproj \
+          --configuration Release \
+          --no-build \
+          --output ./artifacts \
+          /p:Version=${{ steps.version.outputs.version }} \
+          /p:PackageVersion=${{ steps.version.outputs.version }} \
+          /p:AssemblyVersion=${{ steps.version.outputs.assembly_version }} \
+          /p:FileVersion=${{ steps.version.outputs.file_version }} \
+          /p:InformationalVersion=${{ steps.version.outputs.info_version }}
 
     - name: Publish to NuGet.org
       if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
