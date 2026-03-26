@@ -1,6 +1,6 @@
 # Contributing to CheckClauses
 
-Fork the repo → create a branch → make your changes → run tests → open a PR against `develop`.
+Fork the repo → create a branch → make your changes → run tests → open a PR against `main`.
 
 ## Prerequisites
 
@@ -48,8 +48,7 @@ dotnet format CheckClauses.sln
 
 ## Branching
 
-- `main` — stable, released code
-- `develop` — integration branch; open PRs here
+- `main` — integration and release branch; open PRs here
 
 Use short, descriptive branch names: `feature/add-string-clause`, `fix/null-check-edge-case`.
 

@@ -2,7 +2,7 @@
 
 [![NuGet](https://img.shields.io/nuget/v/CheckClauses)](https://www.nuget.org/packages/CheckClauses)
 [![CI](https://github.com/KatzuoOgust/check-clauses/actions/workflows/ci.yml/badge.svg)](https://github.com/KatzuoOgust/check-clauses/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A fluent .NET library for building type-safe validation clauses using a declarative API.
 
@@ -45,9 +45,9 @@ For more examples see [examples/CheckClauses.Examples/Program.cs](examples/Check
 | Method | Returns | Throws |
 |--------|---------|--------|
 | `Match(Func<T, bool>)` | `bool` | Never |
-| `MatchOrThrow(Func<T, bool>)` | `void` | `InvalidOperationException` (default message) |
-| `MatchOrThrow(Func<T, bool>, string)` | `void` | `InvalidOperationException` (static message) |
-| `MatchOrThrow(Func<T, bool>, Func<T, string>)` | `void` | `InvalidOperationException` (dynamic message) |
+| `MatchOrThrow(Func<T, bool>)` | `T` (the clause, for chaining) | `InvalidOperationException` (default message) |
+| `MatchOrThrow(Func<T, bool>, string)` | `T` (the clause, for chaining) | `InvalidOperationException` (static message) |
+| `MatchOrThrow(Func<T, bool>, Func<T, string>)` | `T` (the clause, for chaining) | `InvalidOperationException` (dynamic message) |
 
 ```csharp
 // Returns bool — no exception

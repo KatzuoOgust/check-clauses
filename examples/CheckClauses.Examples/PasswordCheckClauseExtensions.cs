@@ -51,6 +51,6 @@ public static class PasswordCheckClauseExtensions
 		if (clause == null) throw new ArgumentNullException(nameof(clause));
 		if (tester == null) throw new ArgumentNullException(nameof(tester));
 
-		return !string.IsNullOrEmpty(clause.Value) && clause.Value.Any(tester);
+		return !string.IsNullOrEmpty(clause.Value) && clause.Value.Count(tester) >= count;
 	}
 }
