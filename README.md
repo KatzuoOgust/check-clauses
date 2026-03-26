@@ -1,5 +1,9 @@
 # CheckClauses
 
+[![NuGet](https://img.shields.io/nuget/v/CheckClauses)](https://www.nuget.org/packages/CheckClauses)
+[![CI](https://github.com/KatzuoOgust/check-clauses/actions/workflows/ci.yml/badge.svg)](https://github.com/KatzuoOgust/check-clauses/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A fluent .NET library for building type-safe validation clauses using a declarative API.
 
 ## Features
@@ -32,7 +36,36 @@ var isValid = Check.That.Password("MyP@ssw0rd123")
     );
 ```
 
-For more examples, including `MatchOrThrow` with custom error messages, see [examples/CheckClauses.Examples/Program.cs](examples/CheckClauses.Examples/Program.cs).
+For more examples see [examples/CheckClauses.Examples/Program.cs](examples/CheckClauses.Examples/Program.cs).
+
+## API Reference
+
+`CheckClauseExtensions` provides four methods on any `ICheckClause<T>`:
+
+| Method | Returns | Throws |
+|--------|---------|--------|
+| `Match(Func<T, bool>)` | `bool` | Never |
+| `MatchOrThrow(Func<T, bool>)` | `void` | `InvalidOperationException` (default message) |
+| `MatchOrThrow(Func<T, bool>, string)` | `void` | `InvalidOperationException` (static message) |
+| `MatchOrThrow(Func<T, bool>, Func<T, string>)` | `void` | `InvalidOperationException` (dynamic message) |
+
+```csharp
+// Returns bool — no exception
+bool isValid = Check.That.Password("MyP@ssw0rd123")
+    .Match(pwd => pwd.MeetsLengthRequirements(8, 20));
+
+// Throws with a static message
+Check.That.Password("weak")
+    .MatchOrThrow(
+        pwd => pwd.MeetsLengthRequirements(8, 20),
+        "Password must be between 8 and 20 characters.");
+
+// Throws with a dynamic message based on the value
+Check.That.Password("short")
+    .MatchOrThrow(
+        pwd => pwd.MeetsLengthRequirements(8, 20),
+        pwd => $"Password '{pwd.Value}' must be 8–20 characters.");
+```
 
 ## Core Concepts
 
@@ -145,6 +178,10 @@ dotnet run --project examples/CheckClauses.Examples/CheckClauses.Examples.csproj
 - .NET 8.0
 - .NET 9.0 (when SDK available)
 - .NET 10.0 (when SDK available)
+
+## Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, branching, and PR guidelines.
 
 ## License
 
